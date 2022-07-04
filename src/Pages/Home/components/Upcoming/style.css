@@ -1,0 +1,50 @@
+.container-button{
+  margin-bottom: 5% ;
+  overflow-x: hidden;
+}
+.btn-month {
+  margin: 0 6px;
+  color: #5F2EEA;
+  background: white;
+  border: 1px solid #5f2eea;
+  border-radius: 8px;
+  width: 200px;
+  text-decoration: none;
+}
+.btn-month:hover,
+.btn-month:focus,
+.btn-month:active,
+.btn-month.active,
+.open .dropdown-toggle.btn-month {
+  color: white;
+  background-color: #5f2eea;
+  border-color: #5f2eea;
+}
+.card-list-upcoming{
+  border: 1px solid #d6d2d2;
+  border-radius: 8px;
+  padding: 5%;
+  height: 492px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* padding-bottom: 30px; */
+}
+.img-fluid{
+  border-radius: 10px;
+}
+.card-list-content-upcoming h6{
+  font-family: 'Mulish';
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 22px;
+  letter-spacing: 0.15px;
+  margin-top:20px;
+}
+.card-list-content-upcoming p{
+  font-family: 'Open Sans';
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 16px;
+  letter-spacing: 0.4px;
+}

@@ -1,0 +1,121 @@
+.container-fluid{
+  margin: 0;
+  padding: 0;
+  background-color:#F5F6F8 ;
+}
+.wrapper-movie-list{
+  display: flex;
+  flex-direction: row;
+}
+.wrapper-movie-tagline{
+  display: flex;
+  justify-content: space-between;
+  padding: 2% 0;
+}
+.wrapper-movie-tagline-text{
+  position: relative;
+  color: #5F2EEA;
+  font-family: 'Mulish';
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 30px;
+  padding-bottom:10px;
+  margin: 20px 0;
+}
+.wrapper-movie-tagline-text::after{
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0px;
+  left: 0;
+  background-color:#5F2EEA;
+  transition: transform 0.25s ease-out;
+}
+.wrapper-movie-tagline-text:hover:after{
+  transform: scaleX(0.7);
+}
+.card-movie{
+  margin: 3% 0;
+}
+.card-list{
+  border: 1px solid #ffffff;
+  background-color:#e9ebef ;
+  box-shadow: 0px 8px 30px rgba(186, 186, 186, 0.25);
+  border-radius: 8px;
+  padding: 7%;
+  margin-bottom: 20%;
+}
+/* .card-list-cover{
+  width: 100%;
+  height: 209px;
+  
+} */
+.card-list-content{
+  border-radius: 24px;
+  margin: 5% 0;
+  display: none;
+}
+.card-list:hover{
+background-color: #ffffff;
+}
+.card-list:hover .card-list-content{
+  display: block;
+}
+.card-list-text{
+  font-family: 'Mulish';
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 22px;
+  letter-spacing: 0.15px;
+  margin-top:20px;
+}
+.card-list-content-text{
+  font-family: 'Open Sans';
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 16px;
+  letter-spacing: 0.4px;
+  margin-bottom:15%;
+
+}
+.btn-custom {
+  border: 1px solid #5F2EEA;
+  color: #5F2EEA;
+  font-size: 16px;
+  text-decoration: none;
+  }
+.btn-custom:hover{
+  color: white;
+  background-color: #5f2eea;
+  border-color: #5f2eea;
+}
+.container-button{
+  margin-bottom: 5% ;
+}
+.btn1{
+  margin: 0 6px;
+  color: #ffffff;
+  background: #5F2EEA;
+  border: 1px solid #5f2eea;
+  border-radius: 8px;
+  width: 200px;
+}
+.btn2 {
+  margin: 0 6px;
+  color: #5F2EEA;
+  background: white;
+  border: 1px solid #5f2eea;
+  border-radius: 8px;
+  width: 200px;
+}
+.btn2:hover,
+.btn2:focus,
+.btn2:active,
+.btn2.active,
+.open .dropdown-toggle.btn2 {
+  color: white;
+  background-color: #5f2eea;
+  border-color: #5f2eea;
+}

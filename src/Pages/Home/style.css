@@ -1,0 +1,63 @@
+.dashboard{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 2% 0;
+}
+.dashboard-left{
+  text-align: center;
+}
+.tagline{
+  font-family: 'Mulish';
+
+}
+.tagline1{
+  font-family: 'Mulish';
+  font-size: 58px;
+  color: #5F2EEA;
+  font-weight: 700;
+}
+.wrapper-subcribe{
+  margin: 8% 0;
+  padding: 5% 0;
+  box-shadow: 0px 16px 32px #bababa;
+  border-radius: 8px;
+}
+.font-subcribe1{
+  font-family: Mulish;
+  font-weight: 400;
+  font-size: 24px;
+}
+
+.font-subcribe2{
+  font-family: Mulish;
+  font-weight: 700;
+  font-size: 48px;
+  color: #5F2EEA;
+}
+.form-join {
+  padding: 30px 0px;
+}
+.form-email{
+  border: 2px solid #dedede;
+  border-radius: 4px;
+  height: 48px;
+  padding:0px 24px;
+  margin-right: 16px;
+
+}
+.btn-join{
+  background-color: #5F2EEA;
+  border-radius: 4px;
+  border: none;
+  font-family:'Open Sans';
+  font-size: 16px;
+  color: #fff;
+}
+.text-subcribe{
+  font-family: 'Mulish';
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  letter-spacing: 0.75px;
+}
