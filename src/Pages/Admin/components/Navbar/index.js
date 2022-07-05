@@ -7,15 +7,15 @@ import './style.css'
 const Navbar = () => {
   return (
     <>
-      <nav className="navbar">
-        <div className="navbar-left ">
+      <nav className="navbar-admin">
+        <div className="navbar-left-admin ">
           <div className="navbar-left-content ">
             <Link to="#" className="spacing-navbar">
               <img src={`${Tickitz1}`} alt="" className="img-fluid tickitz" />
             </Link>
             <Link to="#" className="spacing-navbar d-none d-md-inline-block">Dashboard</Link>
-            <Link to="#" className="spacing-navbar d-none d-md-inline-block">Manage Movie</Link>
-            <Link to="#" className="spacing-navbar d-none d-md-inline-block">Manage Schedule</Link>
+            <Link to="/manage-movie" className="spacing-navbar d-none d-md-inline-block">Manage Movie</Link>
+            <Link to="/manage-schedule" className="spacing-navbar d-none d-md-inline-block">Manage Schedule</Link>
           </div>
         </div>
         <div className="navbar-right">

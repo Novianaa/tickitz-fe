@@ -1,0 +1,134 @@
+.head{
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 3% 0;
+}
+.container-fluid{
+  margin: 0;
+  padding: 3% 0;
+  background-color: #F5F6F8;
+}
+.text-list-name{
+  font-family: 'Mulish';
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 30px;
+  letter-spacing: 0.25px;
+}
+.head-right{
+  width: 35%;
+  display: flex;
+  justify-content: space-between;
+}
+.costum-input{
+  background-color: #fff;
+  border: 1px solid #DEDEDE;
+  outline: none;
+  border-radius: 16px;
+  padding: 3% 3%;
+  /* margin-left:3%; */
+}
+
+.container-all-movie{
+  padding: 3%;
+  background-color: #fff;
+  border-radius: 8px;
+  width: 100%;
+}
+.wrapper-movie-list{
+  display: flex;
+  flex-wrap: wrap;
+}
+.card-list-movie{
+  border: 0.5px solid #dedede;
+  border-radius: 8px;
+  padding: 2%;
+  margin: 1%;
+  width: 240px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.img-cover{
+  width: 190px;
+  height: 270px;
+  border-radius: 10px;
+}
+.card-list-content-text{
+  margin: 10%  0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.btn-custom{
+  border: 1px solid #5F2EEA;
+  border-radius: 4px;
+  color: #5F2EEA;
+  font-family: 'Mulish';
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18px;
+  text-align: center;
+  margin: 2% 0.5%;
+  
+}
+.btn-custom:hover{
+  color: #ffffff;
+  background-color: #5f2eea;
+}
+
+.schedule-pagination{
+	display: flex;
+	justify-content: center; 
+  margin: 20px 0;
+}
+.schedule-pagination-button{
+  text-decoration: none;
+	color: #5f2eea;
+	margin: 0px 12px;
+	padding: 8px 14px;
+	background: #ffffff;
+	box-shadow: 0px 8px 16px rgba(95, 46, 234, 0.24);
+	border-radius: 8px;
+  margin-bottom: 3%;
+}
+.schedule-pagination-button:active,
+.schedule-pagination-button:hover,
+.schedule-pagination-button:focus{
+  color: #ffffff;
+	margin: 0px 12px;
+	padding: 8px 14px;
+	background: #5f2eea;
+	box-shadow: 0px 8px 16px rgba(95, 46, 234, 0.24);
+	border-radius: 8px;
+  margin-bottom: 3%;
+}
+@media (max-width: 576px){
+  .head{
+    display: block;
+    flex-direction: column;
+  }
+  .head-right{
+    display: flex;
+    margin: 4% 0;
+  }
+  .costum-input{
+    margin: 0 3%;
+    padding: 10%;
+  }
+  .container-all-movie{
+    display: flex;
+    justify-content: center;
+    background-color: #F5F6F8;
+  }
+  .card-list-movie{
+    background-color: #ffffff;
+    width: 152px;
+  }
+  .img-cover{
+    width: 120px;
+    margin-top: 6%;
+  }
+}

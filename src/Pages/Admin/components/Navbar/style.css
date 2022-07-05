@@ -1,16 +1,16 @@
-.navbar{
+.navbar-admin{
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 2% 8%;
-  margin: 2% 0;
+  /* margin: 2% 0; */
 }
 .navbar-shadow{
   box-shadow: 0px 8px 24px rgba(152, 151, 151, 0.16);
 
 }
-.navbar-left{
-  width: 55%;
+.navbar-left-admin{
+  width: 50%;
 display: flex;
 
 }

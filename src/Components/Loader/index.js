@@ -1,7 +1,7 @@
 import React from "react"
 import ContentLoader from "react-content-loader"
 
-const MyLoader = (props) => (
+const Loader = (props) => (
   <>
     <ContentLoader
       speed={3}
@@ -22,5 +22,5 @@ const MyLoader = (props) => (
 )
 
 
-export default MyLoader
+export default Loader
 

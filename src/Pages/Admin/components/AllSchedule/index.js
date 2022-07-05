@@ -1,10 +1,11 @@
 import axios from "axios";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
-import './style.css'
+import EmptyState from "../../../../Components/EmptyState";
+import Loader from "../../../../Components/Loader";
 
-const AllMovie = ({ isAdmin = false }) => {
-  const [movie, setMovie] = useState({
+const AllSchedule = () => {
+  const [schedule, setSchedule] = useState({
     loading: false,
     result: {
       data: []
@@ -15,21 +16,21 @@ const AllMovie = ({ isAdmin = false }) => {
   const [formEditData, setFormEditData] = useState({})
   const [query, setQuery] = useState({
     keyword: "",
-    sortBy: "",
-    orderBy: "",
+    sortBy: "" || 'title',
+    orderBy: "" || 'asc',
   })
   useEffect(() => {
     const { keyword, sortBy, orderBy } = query
-    setMovie((prevState) => ({
+    setSchedule((prevState) => ({
       ...prevState,
       loading: true
     }))
     axios({
       method: 'GET',
-      url: `http://localhost:3000/api/v1/movies/?keyword=${keyword}`,
+      url: `http://localhost:3000/api/v1/schedule/?sortBy=${sortBy}&orderBy=${orderBy}&keyword=${keyword}`,
     })
       .then((res) => {
-        setMovie({
+        setSchedule({
           loading: false,
           result: res.data
         })
@@ -38,13 +39,13 @@ const AllMovie = ({ isAdmin = false }) => {
         console.log(err)
       })
   }, [query])
-  const handleUpdateMovie = async (e) => {
+  const handleUpdateschedule = async (e) => {
     e.preventDefault()
     try {
       const result = await axios({
         method: 'PATCH',
         data: formEditData,
-        url: `http://localhost:3000/api/v1/movies/${formEditData.id}`,
+        url: `http://localhost:3000/api/v1/schedule/${formEditData.id}`,
       })
       if (result.data.status === 200) {
         alert('Successfully Added')
@@ -54,13 +55,24 @@ const AllMovie = ({ isAdmin = false }) => {
       }
 
     } catch (err) {
-      alert(err.res.data.msg)
+      alert(err.response.data.msg)
       console.log(err)
     }
   }
+  // const imageHandler = (e, prevData) => {
+  //   const reader = new FileReader()
+  //   reader.onload = () => {
+  //     if (reader.readyState === 1) {
+  //       setFormEditData({ ...prevData, cover: reader.result })
+  //     }
+  //   }
+  //   reader.readAsDataURL(e.target.files[0])
+  //   console.log(reader.result)
+  // }
   const handleEdit = (prevData) => {
     setFormEditData({
       ...prevData,
+
       release_date: moment(prevData.release_date).format('YYYY-MM-DD'),
       created_at: moment(prevData.created_at).format('YYYY-MM-DD'),
       updated_at: moment(prevData.updated_at).format('YYYY-MM-DD')
@@ -70,70 +82,83 @@ const AllMovie = ({ isAdmin = false }) => {
     if (window.confirm('Are you sure?')) {
       axios({
         method: 'DELETE',
-        url: `http://localhost:3000/api/v1/movies/${id}`,
+        url: `http://localhost:3000/api/v1/schedule/${id}`,
       }).then((res) => {
         alert(res.data.msg)
         setRefetch(!refetch)
       }).catch((err) => {
-        alert(err.movie.result.msg)
+        alert(err.schedule.result.msg)
       })
     }
   }
   return (
     <>
       <div className="container">
-        <div className="wrapper-all-movie">
-          <div className="wrapper-all-movie-head">
-            <div className="wrapper-all-movie-title">Data Movie</div>
+        <div className="wrapper-all-schedule">
+          <div className="wrapper-all-schedule-head">
+            <div className="wrapper-all-schedule-title">Data schedule</div>
             <div className="right-bar">
-              <select className="right-bar-content">
-                <option value="sort">Order by</option>
+              <select className="right-bar-content" onChange={(e) => {
+                setQuery(prevData => ({
+                  ...prevData,
+                  sortBy: e.target.value
+                }))
+              }}>
+                <option hidden>Sort by</option>
                 <option value="title">Title</option>
                 <option value="release_date">Release Date</option>
                 <option value="cinema">Cinema</option>
                 <option value="location">Location</option>
               </select>
-              <select className="right-bar-content">
-                <option value="sort by">Sort by</option>
-                <option value="asc" ></option>
-                <option value="desc"></option>
-              </select>
-              <input action="text" placeholder="Search Movie Name ..." className="right-bar-content for-search-text" onChange={(e) => {
+              <div className="btn-group wrapper-order-by" role="group" onClick={(e) => {
                 setQuery(prevData => ({
                   ...prevData,
-                  title: e.target.value
+                  orderBy: e.target.value
+                }))
+              }}>
+                <button type="button" className="btn wrapper-order-by-btn" name="asc" value="asc"><i className="bi bi-sort-alpha-down" />
+                </button>
+                <button type="button" className="btn wrapper-order-by-btn" name="desc" value="desc"><i className="bi bi-sort-alpha-up" />
+                </button>
+              </div>
+              <input action="text" placeholder="Search schedule Name ..." className="right-bar-content for-search-text" onChange={(e) => {
+                setQuery(prevData => ({
+                  ...prevData,
+                  keyword: e.target.value
                 }))
               }} >
               </input>
             </div>
           </div>
-          <div className="wrapper-all-movie-content">
-            <div className="wrapper-card-all-movie">
-              {movie.result.data.map((movie, index) => {
-                return (
-                  <div className="card-all-movie text-center" key={index}>
-                    <img src={`http://localhost:3000/static/upload/movie/${movie.cover}`} alt={movie.title} className="img-fluid wrapper-img" />
-                    <div className="card-movie-text ">
-                      <h6 className="fw-bold">{movie.title}</h6>
-                      <p className="text-muted">{movie.categories}</p>
+          {!schedule.result.data.length ? <Loader /> : schedule.loading ? <EmptyState /> :
+            <div className="wrapper-all-schedule-content">
+              <div className="wrapper-card-all-schedule">
+                {schedule.result.data.map((schedule, index) => {
+                  return (
+                    <div className="card-all-schedule text-center" key={index}>
+                      <img src={`http://localhost:3000/static/upload/schedule/${schedule.cover}`} alt={schedule.title} className="img-fluid wrapper-img" />
+                      <div className="card-schedule-text">
+                        <h6 className="fw-bold">{schedule.title}</h6>
+                        <p className="text-muted">{schedule.categories}</p>
+                      </div>
+                      <div className="wrapper-btn-all-schedule">
+                        <button type="button" className="btn-lg btn-wrapper-card-update fw-bold" onClick={() => handleEdit(schedule)} data-bs-toggle="modal" data-bs-target="#editschedule">UPDATE</button>
+                        <button type="button" className="btn btn-lg btn-outline-danger fw-bold" onClick={() => handleDelete(schedule.id)}>DELETE</button>
+                      </div>
                     </div>
-                    <div className="wrapper-btn-all-movie">
-                      <button type="button" className="btn-lg btn-wrapper-card-update fw-bold" onClick={() => handleEdit(movie)} data-bs-toggle="modal" data-bs-target="#editMovie">UPDATE</button>
-                      <button type="button" className="btn btn-lg btn-outline-danger fw-bold" onClick={() => handleDelete(movie.id)}>DELETE</button>
-                    </div>
-                  </div>
-                )
-              })}
+                  )
+                })}
+              </div>
             </div>
-          </div>
-          <div class="modal fade" id="editMovie" tabindex="-1" aria-labelledby="editMovieLabel" aria-hidden="true">
+          }
+          <div class="modal fade" id="editschedule" tabindex="-1" aria-labelledby="editscheduleLabel" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="editMovieLabel">Edit Movies</h5>
+                  <h5 class="modal-title" id="editscheduleLabel">Edit schedule</h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form onSubmit={(e) => handleUpdateMovie(e)}>
+                <form onSubmit={(e) => handleUpdateschedule(e)}>
                   <div class="modal-body">
                     <div class="mb-3">
                       <label for="exampleInputEmail1" class="form-label">Title</label>
@@ -143,8 +168,8 @@ const AllMovie = ({ isAdmin = false }) => {
                     </div>
                     <div class="mb-3">
                       <label for="exampleInputPassword1" class="form-label">cover</label>
-                      <input type="text" class="form-control" id="exampleInputPassword1" value={formEditData.cover} onChange={(e) => {
-                        setFormEditData(prevState => ({ ...prevState, cover: e.target.value }))
+                      <input type="file" class="form-control" id="exampleInputPassword1" value={formEditData.cover} onChange={(e) => {
+                        setFormEditData(prevState => ({ ...prevState, cover: e.target.files[0] }))
                       }} />
                     </div>
                     <div class="mb-3">
@@ -186,7 +211,7 @@ const AllMovie = ({ isAdmin = false }) => {
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onClick={(e) => handleUpdateMovie(e)}>Save changes</button>
+                    <button type="button" class="btn btn-primary" onClick={(e) => handleUpdateschedule(e)}>Save changes</button>
                   </div>
                 </form>
               </div>
@@ -197,4 +222,4 @@ const AllMovie = ({ isAdmin = false }) => {
     </>
   )
 }
-export default AllMovie
+export default AllSchedule

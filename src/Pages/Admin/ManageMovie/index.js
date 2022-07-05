@@ -1,12 +1,12 @@
 import React from "react";
 import { Helmet } from "react-helmet";
-import Navbar from "./components/Navbar";
-import Footer from "../../Components/Footer"
-import AddMovie from "./components/AddMovie";
-import AllMovie from "./components/AllMovie";
+import Navbar from "../components/Navbar"
+import Footer from "../../../Components/Footer"
+import AddMovie from "../components/AddMovie";
+import AllMovie from "../components/AllMovie"
 import './style.css'
 
-const DashboardAdmin = ({ isAdmin = false }) => {
+const ManageMovie = ({ isAdmin = false }) => {
   return (
     <>
       <Helmet>
@@ -33,4 +33,4 @@ const DashboardAdmin = ({ isAdmin = false }) => {
     </>
   )
 }
-export default DashboardAdmin
+export default ManageMovie

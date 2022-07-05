@@ -1,7 +1,7 @@
 .container-fluid{
   margin: 0;
-  padding: 0;
-  background-color:#F5F6F8 ;
+  padding: 3% 0;
+  background-color: #F5F6F8;
 }
 .wrapper-movie-list{
   display: flex;
@@ -16,7 +16,7 @@
   position: relative;
   color: #5F2EEA;
   font-family: 'Mulish';
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 700;
   line-height: 30px;
   padding-bottom:10px;

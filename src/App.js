@@ -1,14 +1,16 @@
 import { Routes, Route } from 'react-router-dom';
 import Home from './Pages/Home';
-import DashboardAdmin from './Pages/DashboardAdmin';
-// import Movies from './Pages/Movies';
+import ManageMovie from "./Pages/Admin/ManageMovie"
+import ManageSchedule from "./Pages/Admin/ManageSchedule"
+import MovieNow from './Pages/MovieNow';
 
 const App = () => {
   return (
     <Routes>
       <Route path='/' element={<Home />} />
-      <Route path='/board-admin' element={<DashboardAdmin />} />
-      {/* <Route path='/movies' element={<Movies />} /> */}
+      <Route path='/manage-movie' element={<ManageMovie />} />
+      <Route path='/manage-schedule' element={<ManageSchedule />} />
+      <Route path='/now' element={<MovieNow />} />
     </Routes>
   )
 }

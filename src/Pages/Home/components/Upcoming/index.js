@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Loader from '../../../../Components/MyLoader'
+import Loader from '../../../../Components/Loader'
 import EmptyState from "../../../../Components/EmptyState";
 import './style.css'
 
@@ -52,25 +52,24 @@ const Upcoming = () => {
           <Link className="btn-lg btn-month" to="#" role="button">July</Link>
           <Link className="btn-lg btn-month" to="#" role="button">august</Link>
         </div>
-        {!movieSchedule.loading ? <Loader /> :
-          !movieSchedule.result.data.length ? <EmptyState /> : <div className="container wrapper-movie-list">
-            <div className="row">
-              {movieSchedule.result.data.map((movie, index) => {
-                return (
-                  <div className="col" key={index}>
-                    <div className="card-list-upcoming text-center">
-                      <img src={`http://localhost:3000/static/upload/movie/${movie.cover}`} alt={movie.title} className="img-fluid " />
-                      <div className="card-list-content-upcoming ">
-                        <h6 className="fw-bold">{movie.title}</h6>
-                        <p className="text-muted">{movie.categories}</p>
-                      </div>
-                      <Link className="btn-lg btn-custom fw-bold" to="detail.html" role="button">Details</Link>
+        {!movieSchedule.result.data.length ? <Loader /> : movieSchedule.loading ? <EmptyState /> : <div className="container wrapper-movie-list">
+          <div className="row">
+            {movieSchedule.result.data.map((movie, index) => {
+              return (
+                <div className="col" key={index}>
+                  <div className="card-list-upcoming text-center">
+                    <img src={`http://localhost:3000/static/upload/movie/${movie.cover}`} alt={movie.title} className="img-fluid " />
+                    <div className="card-list-content-upcoming ">
+                      <h6 className="fw-bold">{movie.title}</h6>
+                      <p className="text-muted">{movie.categories}</p>
                     </div>
+                    <Link className="btn-lg btn-custom fw-bold" to="detail.html" role="button">Details</Link>
                   </div>
-                )
-              })}
-            </div>
+                </div>
+              )
+            })}
           </div>
+        </div>
         }
       </section>
     </>

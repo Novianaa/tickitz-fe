@@ -20,12 +20,21 @@
   height: 40px;
   padding: 0 2%;
   border: none;
-  border-radius: 8px;
+  border-radius: 5px;
+  outline: none;
+}
+.wrapper-order-by{
+display: flex;
+}
+.wrapper-order-by-btn{
+  background-color: #fff !important;
+  border: 1px solid;
+  border-radius: 4px;
   outline: none;
 }
 .wrapper-all-movie-content{
   margin: 2% 0;
-  padding: 3%;
+  padding: 2%;
   background-color: #fff;
   border-radius: 10px;
 }
@@ -38,11 +47,12 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  flex: 194px;
+  width: 240px;
+  height:570px;
   border: 1px solid #dedede;
   border-radius: 10px;
-  padding: 2%;
-  margin: 2%;
+  padding: 2% 1%;
+  margin: 1%;
 }
 .wrapper-img{
   margin: 3% 0 10% 0;
