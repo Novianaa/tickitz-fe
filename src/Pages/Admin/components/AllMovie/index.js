@@ -1,60 +1,85 @@
 import axios from "axios";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
+import { GetMovies } from "../../../../redux/actions/Movies";
 import Loader from "../../../../Components/Loader";
 import EmptyState from "../../../../Components/EmptyState";
 import './style.css'
+import { useDispatch, useSelector } from "react-redux";
+import { toast, ToastContainer } from "react-toastify";
 
-const AllMovie = ({ isAdmin = false }) => {
-  const [movie, setMovie] = useState({
-    loading: false,
-    result: {
-      data: []
-    }
-  })
+const AllMovie = () => {
+  let { data, loading, } = useSelector((state) => state.movies)
+  let getToken = useSelector((state) => state.auth)
+  console.log(getToken)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(GetMovies())
+  }, [dispatch])
+  console.log(data.result, 'dfdfd')
+  // const [movie, setMovie] = useState({
+  //   loading: false,
+  //   result: {
+  //     data: []
+  //   }
+  // })
   const [refetch, setRefetch] = useState(false)
 
   const [formEditData, setFormEditData] = useState({})
   const [query, setQuery] = useState({
     keyword: "",
-    sortBy: "" || 'title',
-    orderBy: "" || 'asc',
+    orderBy: "" || 'title',
+    sortBy: "" || 'asc',
+    page: "" || 1,
+    limit: "" || 100,
   })
-  useEffect(() => {
-    const { keyword, sortBy, orderBy } = query
-    setMovie((prevState) => ({
-      ...prevState,
-      loading: true
-    }))
-    axios({
-      method: 'GET',
-      url: `http://localhost:3000/api/v1/movies/?sortBy=${sortBy}&orderBy=${orderBy}&keyword=${keyword}`,
-    })
-      .then((res) => {
-        console.log(`http://localhost:3000/api/v1/movies/?sortBy=${sortBy}&orderBy=${orderBy}&keyword=${keyword}`)
+  console.log(data.token)
 
-        setMovie({
-          loading: false,
-          result: res.data
-        })
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }, [query])
+  // useEffect(() => {
+  //   const { keyword, sortBy, orderBy, page, limit } = query
+  //   setMovie((prevState) => ({
+  //     ...prevState,
+  //     loading: true
+  //   }))
+  //   axios({
+  //     method: 'GET',
+  //     url: `https://backend-tickitz.herokuapp.com/api/v1/movies/?orderBy=${orderBy}&sortBy=${sortBy}&keyword=${keyword}&page=${page}&limit=${limit}`,
+  //   })
+  //     .then((res) => {
+  //       console.log(`https://backend-tickitz.herokuapp.com/api/v1/movies/?orderBy=${orderBy}&sortBy=${sortBy}&keyword=${keyword}&page=${page}&limit=${limit}`)
+
+  //       setMovie({
+  //         loading: false,
+  //         result: res.data
+  //       })
+  //     })
+  //     .catch((err) => {
+  //       console.log(err)
+  //     })
+  // }, [query])
+  // useEffect(() => {
+  //   GetMovies()
+
+  // }, [])
+
+  // console.log(movie)
+
   const handleUpdateMovie = async (e) => {
     e.preventDefault()
     try {
       const result = await axios({
         method: 'PATCH',
         data: formEditData,
-        url: `http://localhost:3000/api/v1/movies/${formEditData.id}`,
+        url: `https://backend-tickitz.herokuapp.com/api/v1/movies/${formEditData.id}`,
+        headers: {
+          authorization: `Bearer ${getToken.data.token}`
+        },
       })
       if (result.data.status === 200) {
-        alert('Successfully Added')
+        toast.success('Successfully Added')
         setRefetch(!refetch)
       } else {
-        alert('Failed, Try Again')
+        toast.error('Failed, Try Again')
       }
 
     } catch (err) {
@@ -75,7 +100,6 @@ const AllMovie = ({ isAdmin = false }) => {
   const handleEdit = (prevData) => {
     setFormEditData({
       ...prevData,
-
       release_date: moment(prevData.release_date).format('YYYY-MM-DD'),
       created_at: moment(prevData.created_at).format('YYYY-MM-DD'),
       updated_at: moment(prevData.updated_at).format('YYYY-MM-DD')
@@ -85,16 +109,20 @@ const AllMovie = ({ isAdmin = false }) => {
     if (window.confirm('Are you sure?')) {
       axios({
         method: 'DELETE',
-        url: `http://localhost:3000/api/v1/movies/${id}`,
+        url: `https://backend-tickitz.herokuapp.com/api/v1/movies/${id}`,
+        headers: {
+          authorization: `Bearer ${getToken.data.token}`
+        },
+
       }).then((res) => {
-        alert(res.data.msg)
+        toast.success(res.data.msg)
         setRefetch(!refetch)
       }).catch((err) => {
-        alert(err.movie.result.msg)
+        toast.error(err.movie.result.msg)
       })
     }
   }
-
+  let totalPage = Array(data.totalPage).fill() ?? []
   return (
     <>
       <div className="container">
@@ -134,13 +162,13 @@ const AllMovie = ({ isAdmin = false }) => {
               </input>
             </div>
           </div>
-          {!movie.result.data.length ? <Loader /> : movie.loading ? <EmptyState /> :
+          {!data.result ? <Loader /> : loading ? <EmptyState /> :
             <div className="wrapper-all-movie-content">
               <div className="wrapper-card-all-movie">
-                {movie.result.data.map((movie, index) => {
+                {data.result.map((movie, index) => {
                   return (
                     <div className="card-all-movie text-center" key={index}>
-                      <img src={`http://localhost:3000/static/upload/movie/${movie.cover}`} alt={movie.title} className="img-fluid wrapper-img" />
+                      <img src={`https://backend-tickitz.herokuapp.com/static/upload/movie/${movie.cover}`} alt={movie.title} className="img-fluid wrapper-img" />
                       <div className="card-movie-text">
                         <h6 className="fw-bold">{movie.title}</h6>
                         <p className="text-muted">{movie.categories}</p>
@@ -150,8 +178,11 @@ const AllMovie = ({ isAdmin = false }) => {
                         <button type="button" className="btn btn-lg btn-outline-danger fw-bold" onClick={() => handleDelete(movie.id)}>DELETE</button>
                       </div>
                     </div>
-                  )
+                  );
+
                 })}
+                <ToastContainer autoClose={2000} />
+
               </div>
             </div>
           }
@@ -173,12 +204,12 @@ const AllMovie = ({ isAdmin = false }) => {
                     <div class="mb-3">
                       <label for="exampleInputPassword1" class="form-label">cover</label>
                       <input type="file" class="form-control" id="exampleInputPassword1" value={formEditData.cover} onChange={(e) => {
-                        setFormEditData(prevState => ({ ...prevState, cover: e.target.files[0] }))
+                        setFormEditData(prevState => ({ ...prevState, cover: e.target.file[0] }))
                       }} />
                     </div>
                     <div class="mb-3">
                       <label for="exampleInputPassword1" class="form-label">Release Date</label>
-                      <input type="text" class="form-control" id="exampleInputPassword1" value={formEditData.release_date} onChange={(e) => {
+                      <input type="date" class="form-control" id="exampleInputPassword1" value={formEditData.release_date} onChange={(e) => {
                         setFormEditData(prevState => ({ ...prevState, release_date: e.target.value }))
                       }} />
                     </div>
@@ -195,7 +226,7 @@ const AllMovie = ({ isAdmin = false }) => {
                       }} />
                     </div>
                     <div class="mb-3">
-                      <label for="exampleInputPassword1" class="form-label">Casts</label>
+                      <label for="exampleInputPassword1" class="form-label">Cast</label>
                       <input type="text" class="form-control" id="exampleInputPassword1" value={formEditData.casts} onChange={(e) => {
                         setFormEditData(prevState => ({ ...prevState, casts: e.target.value }))
                       }} />
@@ -222,6 +253,11 @@ const AllMovie = ({ isAdmin = false }) => {
             </div>
           </div>
         </div>
+        {totalPage.map((item, index) => {
+          return (
+            <button type="button" className="btn pagination-movie-button">{index + 1}</button>
+          )
+        })}
       </div>
     </>
   )

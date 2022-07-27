@@ -1,14 +1,18 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom";
-import Navbar from "../../Components/Navbar";
+import NavbarShadow from "../../Components/NavbarShadow";
 import EmptyState from '../../Components/EmptyState'
 import Loader from '../../Components/Loader'
 import Footer from '../../Components/Footer'
+import NavbarAdmin from "../../Components/NavbarAdmin";
 import './style.css'
 import { Helmet } from "react-helmet";
+import { useSelector } from "react-redux";
 
 const MovieNow = () => {
+  let { data } = useSelector((state) => state.auth)
+
   const [movieSchedule, setMovieSchedule] = useState({
     loading: false,
     result: {
@@ -18,28 +22,28 @@ const MovieNow = () => {
   const [query, setQuery] = useState({
     keyword: '',
     sortBy: '' || 'title',
-    orderBy: '' || 'asc'
+    orderBy: '' || 'asc',
+    page: '' || 1,
+    limit: '' || 100
   })
   useEffect(() => {
-    const { keyword, sortBy, orderBy } = query
+    const { keyword, sortBy, orderBy, page, limit } = query
     setMovieSchedule((prevState) => ({
       ...prevState,
       loading: true
     }))
-    axios.get(`http://localhost:3000/api/v1/schedule/now?sortBy=${sortBy}&orderBy=${orderBy}&keyword=${keyword}`)
+    axios.get(`https://backend-tickitz.herokuapp.com/api/v1/schedule/now?orderBy=${sortBy}&sortBy=${orderBy}&keyword=${keyword}&page=${page}&limit=${limit}`)
       .then((res) => {
-        // console.log(res.data.data)
+        // console.log(`https://backend-tickitz.herokuapp.com/api/v1/schedule/now?orderBy=${sortBy}&sortBy=${orderBy}&keyword=${keyword}&page=${page}&limit=${limit}`)
         setMovieSchedule({
           loading: false,
           result: res.data
         })
       })
       .catch((err) => {
-        // console.log(err)
+        return err
       })
-
   }, [query])
-  console.log(movieSchedule)
   return (
     <>
       <Helmet>
@@ -57,12 +61,13 @@ const MovieNow = () => {
           rel="stylesheet" />
         <title>Tickitz</title>
       </Helmet>
-      <Navbar />
+      {data.role !== 'admin' ? (<NavbarShadow />) : <NavbarAdmin />}
+
       <div className="container-fluid">
         <div className="container wrapper-movie-now">
           <div className="head">
             <p className="text-list-name">List Movie</p>
-            <div className="head-right">
+            <div className="head-right-now">
               <select name="sort" id="sort" className="costum-input" onChange={(e) => {
                 setQuery(prevData => ({
                   ...prevData,
@@ -73,15 +78,20 @@ const MovieNow = () => {
                 <option value='location'>Location</option>
                 <option value='cinema' >Cinema</option>
               </select>
-              <div className="btn-group wrapper-order-by" role="group" onClick={(e) => {
-                setQuery(prevData => ({
-                  ...prevData,
-                  orderBy: e.target.value
-                }))
-              }}>
-                <button type="button" className="btn wrapper-order-by-btn" name="asc" value="asc"><i className="bi bi-sort-alpha-down" />
+              <div className="btn-group wrapper-order-by" role="group" >
+                <button type="button" className="btn wrapper-order-by-btn" name="asc" value="asc" onClick={(e) => {
+                  setQuery(prevData => ({
+                    ...prevData,
+                    orderBy: "asc"
+                  }))
+                }}><i className="bi bi-sort-alpha-down" />
                 </button>
-                <button type="button" className="btn wrapper-order-by-btn" name="desc" value="desc"><i className="bi bi-sort-alpha-up" />
+                <button type="button" className="btn wrapper-order-by-btn" name="desc" value="desc" onClick={(e) => {
+                  setQuery(prevData => ({
+                    ...prevData,
+                    orderBy: "desc"
+                  }))
+                }}><i className="bi bi-sort-alpha-up" />
                 </button>
               </div>
               <input type="search" name="search" id="search" className="costum-input" placeholder="Search Movie Name ..." onChange={(e) => {
@@ -92,13 +102,13 @@ const MovieNow = () => {
               }} />
             </div>
           </div>
-          {!movieSchedule.result.data.length ? <Loader /> : movieSchedule.loading ? <EmptyState /> :
+          {movieSchedule.loading ? <Loader /> : !movieSchedule.result.data.result ? <EmptyState /> :
             <div className="container-all-movie">
               <div className="wrapper-movie-list">
-                {movieSchedule.result.data.map((schedule) => {
+                {movieSchedule.result.data.result.map((schedule) => {
                   return (
                     <div className="card-list-movie text-center">
-                      <img src={`http://localhost:3000/static/upload/movie/${schedule.cover}`} alt={schedule.title} className="img-cover" />
+                      <img src={`https://backend-tickitz.herokuapp.com/static/upload/movie/${schedule.cover}`} alt={schedule.title} className="img-cover" />
                       <div className="card-list-content-text ">
                         <h6 className="fw-bold">{schedule.title}</h6>
                         <p className="text-muted">{schedule.categories}</p>
@@ -111,9 +121,9 @@ const MovieNow = () => {
             </div>
           }
           <div className="schedule-pagination">
-            <Link to="#" className="schedule-pagination-button">1</Link>
-            <Link to="#" className="schedule-pagination-button">2</Link>
-            <Link to="#" className="schedule-pagination-button">3</Link>
+            <Link to="#" className="pagination-button">1</Link>
+            <Link to="#" className="pagination-button">2</Link>
+            <Link to="#" className="pagination-button">3</Link>
           </div>
         </div >
       </div>

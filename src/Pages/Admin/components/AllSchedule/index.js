@@ -27,7 +27,7 @@ const AllSchedule = () => {
     }))
     axios({
       method: 'GET',
-      url: `http://localhost:3000/api/v1/schedule/?sortBy=${sortBy}&orderBy=${orderBy}&keyword=${keyword}`,
+      url: `https://backend-tickitz.herokuapp.com/api/v1/schedule/?sortBy=${sortBy}&orderBy=${orderBy}&keyword=${keyword}`,
     })
       .then((res) => {
         setSchedule({
@@ -45,7 +45,7 @@ const AllSchedule = () => {
       const result = await axios({
         method: 'PATCH',
         data: formEditData,
-        url: `http://localhost:3000/api/v1/schedule/${formEditData.id}`,
+        url: `https://backend-tickitz.herokuapp.com/api/v1/schedule/${formEditData.id}`,
       })
       if (result.data.status === 200) {
         alert('Successfully Added')
@@ -82,7 +82,7 @@ const AllSchedule = () => {
     if (window.confirm('Are you sure?')) {
       axios({
         method: 'DELETE',
-        url: `http://localhost:3000/api/v1/schedule/${id}`,
+        url: `https://backend-tickitz.herokuapp.com/api/v1/schedule/${id}`,
       }).then((res) => {
         alert(res.data.msg)
         setRefetch(!refetch)
@@ -136,7 +136,7 @@ const AllSchedule = () => {
                 {schedule.result.data.map((schedule, index) => {
                   return (
                     <div className="card-all-schedule text-center" key={index}>
-                      <img src={`http://localhost:3000/static/upload/schedule/${schedule.cover}`} alt={schedule.title} className="img-fluid wrapper-img" />
+                      <img src={`https://backend-tickitz.herokuapp.com/static/upload/schedule/${schedule.cover}`} alt={schedule.title} className="img-fluid wrapper-img" />
                       <div className="card-schedule-text">
                         <h6 className="fw-bold">{schedule.title}</h6>
                         <p className="text-muted">{schedule.categories}</p>

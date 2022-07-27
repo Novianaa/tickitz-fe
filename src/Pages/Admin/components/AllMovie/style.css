@@ -51,7 +51,7 @@ display: flex;
   height:570px;
   border: 1px solid #dedede;
   border-radius: 10px;
-  padding: 2% 1%;
+  padding: 1% 1%;
   margin: 1%;
 }
 .wrapper-img{
@@ -88,4 +88,15 @@ display: flex;
   letter-spacing: 0.75px;
   box-shadow: 0px 8px 24px rgba(240, 102, 102, 0.24);
   border-radius: 8px;
+}
+.pagination-movie-button{
+  text-decoration: none;
+	color: #5f2eea;
+	margin: 0px 12px;
+	padding: 8px 14px;
+	background: #ffffff;
+	box-shadow: 0px 8px 16px rgba(95, 46, 234, 0.24);
+	border-radius: 8px;
+  margin-bottom: 3%;
+  outline: none;
 }

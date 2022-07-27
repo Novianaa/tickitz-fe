@@ -1,0 +1,133 @@
+.container-fluid-signin{
+  margin: 0 ;
+  padding: 0 ;
+}
+.banner-tickitz {
+	display: flex;
+}
+.banner-tickitz-image-container {
+	position: relative;
+	width: 60%;
+}
+.tickitz-form {
+	width: 100%;
+}
+.banner-tickitz-overlay-image {
+	width: 50%;
+}
+.banner-tickitz-overlay-parent {
+	text-align: center;
+	margin: 220px 0px;
+}
+.banner-tickitz-image {
+	height: 700px;
+	width: 100%;
+	object-fit: cover;
+}
+.banner-tickitz-overlay {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	background-color: rgba(43, 21, 107, 0.8);
+}
+.banner_tickitz-title {
+	margin-top: 10px;
+	color: #ffffff;
+	opacity: 0.8;
+}
+.form-signin{
+  width: 40%;
+  padding: 0 3%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+.signin{
+  font-family: 'Inter';
+  font-weight: 600;
+  font-size: 48px;
+  line-height: 58px;
+  letter-spacing: 0.003em;
+}
+.signin-content{
+  font-family: 'Inter';
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: 0.007em;
+  color: #AAAAAA;
+}
+.field-email{
+  display: flex;
+  flex-direction: column;
+}
+.field-pass{
+  display: flex;
+  flex-direction: column;
+}
+.for-label{
+  font-family: 'Mulish';
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+  color: #4E4B66;
+}
+.field-form{
+  font-family: 'Mulish';
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0.75px;
+  border: 1px solid #DEDEDE;
+  border-radius: 10px;
+  padding: 4%;
+  margin: 3% 0;
+  outline: none;
+}
+.btn-signin{
+  background: #5F2EEA;
+  border-radius: 10px;
+  border: none;
+  height:47px ;
+  color: #ffffff;
+  font-family: 'Mulish';
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.75px;
+  /* padding: 3%; */
+  margin: 7% 0;
+}
+.text-more{
+  font-family: 'Inter';
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+  letter-spacing: 0.005em;
+  color: #8692A6;
+  margin: 2% 0;
+
+}
+@media (max-width: 768px){
+  .banner-tickitz-image-container{
+    display: none;
+  }
+  .form-signin{
+    width: 100%;
+  }
+}
+@media (max-width: 576px){
+  .banner-tickitz-image-container{
+    display: none;
+  }
+  .form-signin{
+    width: 100%;
+  }
+}

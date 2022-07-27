@@ -1,49 +1,63 @@
 import axios from "axios";
 import React, { useRef, useState } from "react";
+import { useSelector } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
 import './style.css'
 
 const AddMovie = () => {
-  const [formAddData, setFormAddData] = useState({
-    title: "",
-    categories: "",
-    release_date: "",
-    director: "",
-    duration: "",
-    casts: "",
-    synopsis: "",
-    cover: "",
-  })
+  let { data, error, loading } = useSelector((state) => state.auth)
+  console.log(data)
+
+  const [formAddData, setFormAddData] = useState({})
   const [refetch, setRefetch] = useState(false)
   const inputFile = useRef(null);
   const onClickInput = () => {
     inputFile.current.click()
-    // updateImage();
   }
-  const formData = new FormData();
-  for (const data in formAddData) {
-    formData.append(data, formAddData[data]);
+
+  const formData = new FormData()
+  formData.append('cover', formAddData.cover)
+  formData.append('title', formAddData.title)
+  formData.append('release_date', formAddData.release_date)
+  formData.append('director', formAddData.director)
+  formData.append('synopsis', formAddData.synopsis)
+  formData.append('casts', formAddData.casts)
+  formData.append('categories', formAddData.categories)
+  formData.append('duration', formAddData.duration)
+
+  // console dari formData
+  for (const value of formData.values()) {
+    console.log(value)
   }
   const handleAddMovie = async (e) => {
     e.preventDefault()
     try {
       const result = await axios({
         method: 'POST',
-        url: 'http://localhost:3000/api/v1/movies/',
-        data: formAddData,
+        url: 'https://backend-tickitz.herokuapp.com/api/v1/movies/',
+        data: formData,
+        headers: {
+          authorization: `Bearer ${data.token}`
+        },
       })
       if (result.data.status === 201) {
-        alert('Successfully Added')
+        toast.success('Successfully Added')
         setRefetch(!refetch)
       } else {
-        alert('Failed, Try Again')
+        toast.error('Failed, Try Again')
       }
+      console.log(result.data)
+
     } catch (err) {
-      alert(err.res.data.msg)
-      console.log(err)
+      toast.error(err.response.data.msg)
+      // console.log(err, 'klkl')
 
     }
   }
-  console.log(formAddData)
+  // const toastError = () => {
+  //   toast.error(error.msg);
+  // }
+  // console.log(formAddData.cover.name)
   return (
     <>
       <div className="container">
@@ -52,10 +66,10 @@ const AddMovie = () => {
           <div className="wrapper-form-movie-update">
             <div className="wrapper-form-movie-content" >
               <div className="card-movie-left text-center">
-                {/* <img src={formAddData.cover ? `${setFormAddData.cover}` : `https://kravmaganewcastle.com.au/wp-content/uploads/2017/04/default-image-620x600.jpg`} alt="" className="wrapper-display-cover" /> */}
+                <img src={formAddData.cover ? `${formAddData.cover}` : `http://bppl.kkp.go.id/uploads/publikasi/karya_tulis_ilmiah/default.jpg`} alt="" className="wrapper-display-cover" />
                 <div className="wrapper-form-cover">
-                  <input type="file" onChange={(e) => setFormAddData(prevState => ({ ...prevState, cover: e.target.files[0] }))} name="image" id="image" ref={inputFile} />
-                  <div className="hover-pointer" onClick={() => onClickInput()}><i className="bi bi-pencil" />
+                  <input type="file" onChange={(e) => setFormAddData(prevState => ({ ...prevState, cover: e.target.files[0] }))} name="image" id="image" ref={inputFile} hidden />
+                  <div className="hover-pointer d-flex text-center" onClick={() => onClickInput()}><i className="bi bi-pencil" />
                     Edit
                   </div>
                 </div>
@@ -99,7 +113,7 @@ const AddMovie = () => {
                     <label for="inputDate" className="label-content">
                       Release date
                     </label>
-                    <input type="text" name="inputDate" id="inputDate" placeholder="yyyy-mm-dd"
+                    <input type="date" name="inputDate" id="inputDate" placeholder="yyyy-mm-dd"
                       className="form-control" onChange={(e) => {
                         setFormAddData(prevState => ({ ...prevState, release_date: e.target.value }))
                       }} />
@@ -125,12 +139,15 @@ const AddMovie = () => {
               }} />
             </div>
             <div className="wrapper-btn">
-              <button type="button" className="btn-lg btn-wrapper-update fw-bold" >Reset</button>
-              <button type="button" className="btn-lg btn-wrapper-update fw-bold" onClick={(e) => handleAddMovie(e)}>Submit</button>
+              <button type="reset" className="btn-lg btn-wrapper-update fw-bold" >Reset</button>
+              {loading ? (
+                <button className="btn-lg btn-wrapper-update fw-bold" disabled={true}><i className="fas fa-spinner fa-spin" /></button>
+              ) : (
+                <button type="button" className="btn-lg btn-wrapper-update fw-bold" onClick={(e) => handleAddMovie(e)} >Submit</button>
+              )}<ToastContainer autoClose={2000} />
             </div>
           </div>
         </form>
-
       </div>
     </>
   )

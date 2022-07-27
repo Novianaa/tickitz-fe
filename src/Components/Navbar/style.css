@@ -1,11 +1,10 @@
-.wrapper-navbar-shadow{
+.navbar-home{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1% 9%;
-  box-shadow: 0px 8px 24px rgba(152, 151, 151, 0.16);
+  padding: 2% 8%;
+  margin: 0 !important;
 }
-
 .navbar-left{
 width:40%
 }
@@ -25,12 +24,17 @@ width:40%
   font-size: 18px;
   font-weight: 600;
 }
-.navbar-right{
+.navbar-right-login{
   text-decoration: none;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-end !important;
   width: 40%;
+}
+.form-search{
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
 }
 .form-search-text{
 display: none;
@@ -44,19 +48,30 @@ margin: 0 3%;
 }
 .form-search:hover .form-search-text{
   display: block;
-
 }
-.wrapper-photo-profile-navbar{
-  display: flex;
-  justify-content: flex-end;
+
+.btn-nav{
+  text-decoration: none;
+}
+
+.btn-signup{
+  background-color: #5F2EEA;
+  border-radius: 5px;
+  border: none;
+  color: #ffffff;
+  font-family: 'Mulish';
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: 0.75px;
+}
+.wrapper-dropdown-profile{
+  width: 30%;
+  margin-left: 10%;
 }
 .photo-profile{
   width: 40%;
-  height: 40%;
-  
-}
-.btn-nav{
-  text-decoration: none;
+  border-radius: 24px;
 }
 .navigation-button-icon-mobile{
   display: block;

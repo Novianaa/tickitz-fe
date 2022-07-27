@@ -17,7 +17,7 @@ const NowShowing = () => {
       ...prevState,
       loading: true
     }))
-    axios.get('http://localhost:3000/api/v1/schedule/now?limit=5')
+    axios.get('https://backend-tickitz.herokuapp.com/api/v1/schedule/now?limit=5')
       .then((res) => {
         // console.log(res.data.data)
         setMovieSchedule({
@@ -26,10 +26,11 @@ const NowShowing = () => {
         })
       })
       .catch((err) => {
-        // console.log(err)
+        console.log(err)
       })
 
   }, [])
+  // console.log(movieSchedule.result.data.result.length, 'kokok')
   return (
     <>
       <div className="container-fluid card-movie">
@@ -40,14 +41,14 @@ const NowShowing = () => {
               All</Link>
             </div>
           </div>
-          {!movieSchedule.result.data.length ? <Loader /> : movieSchedule.loading ? <EmptyState /> :
+          {movieSchedule.loading ? <Loader /> : !movieSchedule.result.data.result ? <EmptyState /> :
             <div className="container wrapper-movie-list">
               <div className="row">
-                {movieSchedule.result.data.map((movie) => {
+                {movieSchedule.result.data.result.map((movie) => {
                   return (
                     <div className="col" >
                       <div className="card-list text-center">
-                        <img crossOrigin="anonymous" src={`http://localhost:3000/static/upload/movie/${movie.cover}`} alt={movie.title} className="img-fluid card-list-cover" />
+                        <img crossOrigin="anonymous" src={`https://backend-tickitz.herokuapp.com/static/upload/movie/${movie.cover}`} alt={movie.title} className="img-fluid card-list-cover" />
                         <div className="card-list-content ">
                           <h6 className="fw-bold card-list-text">{movie.title}</h6>
                           <p className="text-muted card-list-content-text">{movie.categories}</p>

@@ -1,13 +1,17 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import Footer from '../../Components/Footer'
-import Navbar from './components/Navbar';
+import Navbar from '../../Components/Navbar';
+import NavbarAdmin from '../../Components/NavbarAdmin';
 import NowShowing from './components/NowShowing';
 import Upcoming from './components/Upcoming';
 import movieGroup from '../../assets/images/Group14.svg'
 import './style.css'
-import { Helmet } from 'react-helmet';
+import { useSelector } from 'react-redux';
 
 const Home = () => {
+  const { data } = useSelector((state) => state.auth)
+
   return (
     <>
       <Helmet>
@@ -25,7 +29,8 @@ const Home = () => {
           rel="stylesheet" />
         <title>Tickitz</title>
       </Helmet>
-      <Navbar />
+      {data.role !== 'admin' ? (<Navbar />) : <NavbarAdmin />}
+
       <section className="container">
         <div className="dashboard">
           <div className="dashboard-left">
@@ -33,7 +38,7 @@ const Home = () => {
             <div className="tagline1">Find out now!</div>
           </div>
           <div className="dashboard-right">
-            <img src={`${movieGroup}`} alt="movies group" className="img-fluid dashboard-right-img" />
+            <img src={movieGroup} alt="movies group" className="img-fluid dashboard-right-img" />
           </div>
         </div>
       </section>

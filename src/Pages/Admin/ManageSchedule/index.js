@@ -1,6 +1,6 @@
 import React from "react";
 import { Helmet } from "react-helmet";
-import Navbar from "../components/Navbar"
+import Navbar from "../../../Components/NavbarAdmin"
 import Footer from "../../../Components/Footer"
 import AddSchedule from "../components/AddSchedule";
 import AllSchedule from "../components/AllSchedule"

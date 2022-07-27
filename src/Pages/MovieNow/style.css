@@ -6,7 +6,7 @@
 }
 .container-fluid{
   margin: 0;
-  padding: 3% 0;
+  padding:  0;
   background-color: #F5F6F8;
 }
 .text-list-name{
@@ -16,8 +16,8 @@
   line-height: 30px;
   letter-spacing: 0.25px;
 }
-.head-right{
-  width: 35%;
+.head-right-now{
+  width: 45%;
   display: flex;
   justify-content: space-between;
 }
@@ -29,7 +29,6 @@
   padding: 3% 3%;
   /* margin-left:3%; */
 }
-
 .container-all-movie{
   padding: 3%;
   background-color: #fff;
@@ -84,7 +83,7 @@
 	justify-content: center; 
   margin: 20px 0;
 }
-.schedule-pagination-button{
+.pagination-button{
   text-decoration: none;
 	color: #5f2eea;
 	margin: 0px 12px;

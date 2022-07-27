@@ -12,12 +12,13 @@ const Upcoming = () => {
       data: []
     }
   })
+
   useEffect(() => {
     setMovieSchedule((prevState) => ({
       ...prevState,
       loading: true
     }))
-    axios.get('http://localhost:3000/api/v1/schedule/upcoming?limit=5')
+    axios.get('https://backend-tickitz.herokuapp.com/api/v1/schedule/upcoming?limit=5')
       .then((res) => {
         setMovieSchedule({
           loading: false,
@@ -30,7 +31,9 @@ const Upcoming = () => {
       })
 
   }, [])
-  console.log(movieSchedule.loading)
+  // console.log(movieSchedule.result.result, 'klkl')
+
+  // console.log(!movieSchedule.result.data.result)
   return (
     <>
       <section className="container" >
@@ -52,24 +55,26 @@ const Upcoming = () => {
           <Link className="btn-lg btn-month" to="#" role="button">July</Link>
           <Link className="btn-lg btn-month" to="#" role="button">august</Link>
         </div>
-        {!movieSchedule.result.data.length ? <Loader /> : movieSchedule.loading ? <EmptyState /> : <div className="container wrapper-movie-list">
-          <div className="row">
-            {movieSchedule.result.data.map((movie, index) => {
-              return (
-                <div className="col" key={index}>
-                  <div className="card-list-upcoming text-center">
-                    <img src={`http://localhost:3000/static/upload/movie/${movie.cover}`} alt={movie.title} className="img-fluid " />
-                    <div className="card-list-content-upcoming ">
-                      <h6 className="fw-bold">{movie.title}</h6>
-                      <p className="text-muted">{movie.categories}</p>
+        {!movieSchedule.result.data.result ? <EmptyState /> : movieSchedule.loading ? <Loader /> :
+          <div className="container wrapper-movie-list">
+            <div className="row">
+              {movieSchedule.result.data.result.map((movie, index) => {
+                console.log(movie, 'jjk')
+                return (
+                  <div className="col" key={index}>
+                    <div className="card-list-upcoming text-center">
+                      <img src={`https://backend-tickitz.herokuapp.com/static/upload/movie/${movie.cover}`} alt={movie.title} className="img-fluid " />
+                      <div className="card-list-content-upcoming ">
+                        <h6 className="fw-bold">{movie.title}</h6>
+                        <p className="text-muted">{movie.categories}</p>
+                      </div>
+                      <Link className="btn-lg btn-custom fw-bold" to="detail.html" role="button">Details</Link>
                     </div>
-                    <Link className="btn-lg btn-custom fw-bold" to="detail.html" role="button">Details</Link>
                   </div>
-                </div>
-              )
-            })}
+                )
+              })}
+            </div>
           </div>
-        </div>
         }
       </section>
     </>
